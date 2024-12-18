@@ -2,7 +2,7 @@
 @section('content')
 <script>
     //-------------------------------------------------------------------------------------------------
-    //Ajax Form Delete Data
+    //Ajax Form Approve Permohonan
     //-------------------------------------------------------------------------------------------------
     $(document).on('click', '.approveBtn', function (e) {
         e.preventDefault();

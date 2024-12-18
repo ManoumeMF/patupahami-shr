@@ -42,8 +42,6 @@ class AuthController extends Controller
             $user = Auth::user();
             $userRole = Auth::user()->roles->roleName;
 
-            //dd($user->idJenisUser);
-
             $userData = DB::select('CALL view_userSessionById(?, ?)', [$user->id, $user->idJenisUser]);
 
             $request->session()->put('userSession', $userData);

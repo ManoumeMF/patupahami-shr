@@ -19050,7 +19050,7 @@ input.error {
 }
 @media (min-width: 992px) and (min-width: 992px) {
   [data-nav-layout=horizontal] .horizontal-logo .header-logo img {
-    height: 1.75rem;
+    height: 2.75rem;
     line-height: 1.75rem;
   }
   [data-nav-layout=horizontal] .horizontal-logo .header-logo .desktop-logo {

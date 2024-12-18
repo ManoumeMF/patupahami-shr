@@ -86,7 +86,7 @@
                     const toast = new bootstrap.Toast(primarytoastDeleteSuccess)
                     toast.show()
 
-                    setTimeout("window.location='{{ route('ObjekRetribusi.index') }}'", 1500);
+                    setTimeout("window.location='{{ route('ObjekRetribusi.index') }}'", 1200);
                 }
             }
         });
@@ -129,10 +129,10 @@
                 <table id="responsiveDataTable" class="table table-bordered text-nowrap w-100">
                     <thead>
                         <tr>
-                            <th>Kode Objek Retribusi</th>
                             <th>Objek Retribusi</th>
-                            <th>No. Bangunan</th>
+                            <th>Alamat</th>
                             <th>Jenis Objek Retribusi</th>
+                            <th>No. Bangunan</th>
                             <th>Lokasi Objek Retribusi</th>
                             <th class="text-center" style="width: 10px;">Aksi</th>
                         </tr>
@@ -141,10 +141,21 @@
                         @if (isset($objekRetribusi) && count($objekRetribusi) > 0)
                             @foreach ($objekRetribusi as $oR)
                                 <tr>
-                                    <td>{{ $oR->kodeObjekRetribusi }}</td>
-                                    <td>{{ $oR->objekRetribusi }}</td>
-                                    <td>{{ $oR->noBangunan }}</td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <span class="avatar avatar-md avatar-square bg-light"><img
+                                                    src="{{ asset('admin_resources/assets/images/user-general/no_image1.png') }}"
+                                                    class="w-100 h-100" alt="..."></span>
+                                            <div class="ms-2">
+                                                <p class="fw-semibold mb-0 d-flex align-items-center"><a
+                                                        href="javascript:void(0);">{{ $oR->kodeObjekRetribusi }}</a></p>
+                                                <p class="fs-12 text-muted mb-0">{{ $oR->objekRetribusi }}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{ $oR->alamatLengkap }}</td>
                                     <td>{{ $oR->jenisObjekRetribusi }}</td>
+                                    <td>{{ $oR->noBangunan }}</td>
                                     <td>{{ $oR->lokasiObjekRetribusi }}</td>
                                     <td>
                                         <div class="dropdown">
@@ -212,6 +223,6 @@
         </div>
     </div>
 </div>
-<!-- End:: Delete Pekerjaan -->
+<!-- End:: Delete Objek Retribusi -->
 
 @endsection

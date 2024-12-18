@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
@@ -30,6 +31,8 @@ class ObjekRetribusiController extends Controller
 
     public function store(Request $request)
     {
+        //dd($request->all());
+
         if ($request->hasFile('fileGambarDenahTanah')) {
             $uploadedFile = $request->file('fileGambarDenahTanah');
             $photo = $request->get('kodeObjekRetribusi') . "-Denah Tanah-" . time() . "." . $uploadedFile->getClientOriginalExtension();
@@ -69,6 +72,8 @@ class ObjekRetribusiController extends Controller
             ];
         }
 
+        $userId = Auth::user()->id;
+
         $objekRetribusi = json_encode([
             'KodeObjekRetribusi' => $request->get('kodeObjekRetribusi'),
             'NoBangunan' => $request->get('nomorBangunan'),
@@ -93,6 +98,7 @@ class ObjekRetribusiController extends Controller
             'BatasTimur' => $request->get('batasTimur'),
             'BatasBarat' => $request->get('batasBarat'),
             'GambarDenahTanah' => $photoPath,
+            'CreatedBy' => $userId,
             'FotoObjekRetribusi' => $detailobjekRetribusi
         ]);
 
@@ -177,8 +183,6 @@ class ObjekRetribusiController extends Controller
     {
         $objekRetribusiData = DB::select('CALL view_objekRetribusiById(' . $request->get('idObjekRetribusi') . ')');
         $objekRetribusiTemp = $objekRetribusiData[0];
-
-        //dd($objekRetribusiTemp);
 
         if ($objekRetribusiTemp) {
             $id = $request->get('idObjekRetribusi');
@@ -437,6 +441,8 @@ class ObjekRetribusiController extends Controller
             'IsDinilai' => $isStatusPenilaian,
             'NamaPenilai' => $request->get('namaPenilai'),
             'NominalTarif' => $request->get('tarifObjek'),
+            'HargaTanah' => $request->get('hargaTanah'),
+            'HargaBangunan' => $request->get('hargaBangunan'),
             'Keterangan' => $request->get('keterangan'),
             'FileHasilPenilaian' => $filePath
         ]);
@@ -562,6 +568,8 @@ class ObjekRetribusiController extends Controller
             //'StatusPenilaian' => $isStatusPenilaian,
             'NamaPenilai' => $request->get('namaPenilai'),
             'NominalTarif' => $request->get('tarifObjek'),
+            'HargaTanah' => $request->get('hargaTanah'),
+            'HargaBangunan' => $request->get('hargaBangunan'),
             'Keterangan' => $request->get('keterangan'),
             'FileHasilPenilaian' => $filePath
         ]);

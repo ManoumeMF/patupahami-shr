@@ -46,6 +46,7 @@ class PegawaiController extends Controller
             'Alamat' => $request->get('alamat'),
             'NomorPonsel' => $request->get('nomorPonsel'),
             'NomorWhatsapp' => $request->get('nomorWhatsapp'),
+            'Email' => $request->get('email'),
             'FileFoto' => $photoPath
         ]);
 
@@ -162,10 +163,9 @@ class PegawaiController extends Controller
             'Alamat' => $request->get('alamat'),
             'NomorPonsel' => $request->get('nomorPonsel'),
             'NomorWhatsapp' => $request->get('nomorWhatsapp'),
+            'Email' => $request->get('email'),
             'FileFoto' => $photoPath
         ]);
-
-        //dd($wajibRetribusi);
 
         if ($pegawai) {
             $response = DB::statement('CALL update_pegawai(:dataPegawai)', ['dataPegawai' => $pegawai]);

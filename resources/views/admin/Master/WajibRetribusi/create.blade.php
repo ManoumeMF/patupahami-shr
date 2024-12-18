@@ -60,39 +60,6 @@
         $("#photoWajibRetribusi").change(function () {
             readURL(this);
         });
-
-
-        // for product images upload
-        //const MultipleElement1 = document.querySelector('.foto-wajib-retribusi');
-        //FilePond.create(MultipleElement1,);
-
-        /* filepond 
-        FilePond.registerPlugin(
-            FilePondPluginImagePreview,
-            FilePondPluginImageExifOrientation,
-            FilePondPluginFileValidateSize,
-            FilePondPluginFileEncode,
-            FilePondPluginImageEdit,
-            FilePondPluginFileValidateType,
-            FilePondPluginImageCrop,
-            FilePondPluginImageResize,
-            FilePondPluginImageTransform
-        );
-
-        /* single upload 
-        FilePond.create(
-            document.querySelector('.single-fileupload'),
-            {
-                labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
-                imagePreviewHeight: 170,
-                imageCropAspectRatio: '1:1',
-                imageResizeTargetWidth: 200,
-                imageResizeTargetHeight: 200,
-                stylePanelLayout: 'compact circle',
-                styleLoadIndicatorPosition: 'center bottom',
-                styleButtonRemoveItemPosition: 'center bottom'
-            }
-        );*/
     });
 
 </script>
@@ -156,12 +123,12 @@
                     type: "GET",
                     data: data,
                     dataType: "json",
+                    delay: 250,
                     success: function (data) {
                         if (data) {
                             $('#kota').empty();
-                            //$("#kota>optgroup>option[value='1']").removeAttr('disabled');
                             $('#kota').prop('disabled', false);
-                            //$('#kota').append('<option hidden>Choose Course</option>');
+                            $('#kota').append('<option>Pilih Kabupaten/Kota</option>');
                             $.each(data, function (key, kota) {
                                 $('#kota').append('<option value="' + kota.city_id + '">' + kota.city_name + '</option>');
                             });
@@ -189,10 +156,12 @@
                     type: "GET",
                     data: data,
                     dataType: "json",
+                    delay: 250,
                     success: function (data) {
                         if (data) {
                             $('#distrik').empty();
                             $('#distrik').prop('disabled', false);
+                            $('#distrik').append('<option>Pilih Kecamatan</option>');
                             $.each(data, function (key, kecamatan) {
                                 $('#distrik').append('<option value="' + kecamatan.dis_id + '">' + kecamatan.dis_name + '</option>');
                             });
@@ -220,10 +189,12 @@
                     type: "GET",
                     data: data,
                     dataType: "json",
+                    delay: 250,
                     success: function (data) {
                         if (data) {
                             $('#kelurahan').empty();
                             $('#kelurahan').prop('disabled', false);
+                            $('#kelurahan').append('<option>Pilih Kelurahan/Desa</option>');
                             $.each(data, function (key, kelurahan) {
                                 $('#kelurahan').append('<option value="' + kelurahan.subdis_id + '">' + kelurahan.subdis_name + '</option>');
                             });
@@ -289,7 +260,7 @@
                                                     @endforeach
                                                 </select>
                                                 <div class="invalid-feedback">
-                                                    Jenis Wajib Retribusi Tidak Boleh Kosong
+                                                    Jenis Wajib Retribusi Tidak Boleh Kosong!
                                                 </div>
                                             </div>
                                             <div class="col-xl-8">
@@ -298,7 +269,7 @@
                                                 <input type="text" class="form-control" id="nik" name="nik"
                                                     placeholder="Masukkan Nomor Induk Kependudukan (NIK)" required>
                                                 <div class="invalid-feedback">
-                                                    Nomor Induk Kependudukan (NIK) Tidak Boleh Kosong
+                                                    Nomor Induk Kependudukan (NIK) Tidak Boleh Kosong!
                                                 </div>
                                             </div>
                                             <div class="col-xl-4">
@@ -306,7 +277,7 @@
                                                 <input type="text" class="form-control" id="npwrd" name="npwrd"
                                                     placeholder="Masukkan NPWRD" required>
                                                 <div class="invalid-feedback">
-                                                    NPWRD
+                                                    NPWRD Tidak Boleh Kosong!
                                                 </div>
                                             </div>
                                             <div class="col-xl-8">
@@ -316,7 +287,7 @@
                                                     name="namaWajibRetribusi"
                                                     placeholder="Masukkan Nama Wajib Retribusi Sesuai KTP" required>
                                                 <div class="invalid-feedback">
-                                                    Nama Wajib Retribusi Tidak Boleh Kosong
+                                                    Nama Wajib Retribusi Tidak Boleh Kosong!
                                                 </div>
                                             </div>
                                             <div class="col-xl-12">
@@ -330,7 +301,7 @@
                                                     @endforeach
                                                 </select>
                                                 <div class="invalid-feedback">
-                                                    Pekerjaan Tidak Boleh Kosong
+                                                    Pekerjaan Tidak Boleh Kosong!
                                                 </div>
                                             </div>
                                             <div class="col-xl-6">
@@ -345,7 +316,7 @@
                                                     @endforeach
                                                 </select>
                                                 <div class="invalid-feedback">
-                                                    Provinsi Tidak Boleh Kosong
+                                                    Provinsi Tidak Boleh Kosong!
                                                 </div>
                                             </div>
                                             <div class="col-xl-6">
@@ -356,7 +327,7 @@
 
                                                 </select>
                                                 <div class="invalid-feedback">
-                                                    Kabupaten/Kota Tidak Boleh Kosong
+                                                    Kabupaten/Kota Tidak Boleh Kosong!
                                                 </div>
                                             </div>
                                             <div class="col-xl-6">
@@ -367,7 +338,7 @@
 
                                                 </select>
                                                 <div class="invalid-feedback">
-                                                    Kecamatan Tidak Boleh Kosong
+                                                    Kecamatan Tidak Boleh Kosong!
                                                 </div>
                                             </div>
                                             <div class="col-xl-6">
@@ -379,7 +350,7 @@
 
                                                 </select>
                                                 <div class="invalid-feedback">
-                                                    Kelurahan/Desa Tidak Boleh Kosong
+                                                    Kelurahan/Desa Tidak Boleh Kosong!
                                                 </div>
                                             </div>
                                             <div class="col-xl-12">
@@ -387,7 +358,10 @@
                                                     Retribusi</label>
                                                 <textarea class="form-control" id="alamat-wajib" rows="2"
                                                     name="alamatWajibRetribusi"
-                                                    placeholder="Masukkan Alamat Wajib Retribusi"></textarea>
+                                                    placeholder="Masukkan Alamat Wajib Retribusi" required></textarea>
+                                                    <div class="invalid-feedback">
+                                                    Alamat Tidak Boleh Kosong!
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -407,10 +381,13 @@
                                                 <input type="text" class="form-control" id="nomor-whatsapp"
                                                     name="nomorWhatsapp" placeholder="Masukkan Nomor Whatsapp">
                                             </div>
-                                            <div class="col-xl-14">
+                                            <div class="col-xl-12">
                                                 <label for="wmail" class="form-label">Email</label>
-                                                <input type="text" class="form-control" id="email" name="email"
+                                                <input type="email" class="form-control" id="email" name="email"
                                                     placeholder="Masukkan email">
+                                                <div class="invalid-feedback">
+                                                    Format email salah!
+                                                </div>
                                             </div>
                                             <div class="col-xl-12">
                                                 <div class="col-xxl-6 col-xl-12 col-lg-12 col-md-6">

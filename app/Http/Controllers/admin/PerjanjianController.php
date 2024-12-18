@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
@@ -11,6 +12,8 @@ use Illuminate\Support\Facades\Storage;
 
 class PerjanjianController extends Controller
 {
+    private  $stat = 6;
+
     public function index()
     {
         $perjanjianSewa = DB::select('CALL viewAll_perjanjianSewa()'); 
@@ -57,8 +60,8 @@ class PerjanjianController extends Controller
         if ($request->hasFile('fileSuratPerjanjian')) {
             //dd($request->file('fileSuratPerjanjian'));
             $uploadedFile = $request->file('fileSuratPerjanjian');
-            $filePenilaian = "-SuratPerjanjian-" . $request->get('noSuratPerjanjian') . time() . "." . $uploadedFile->getClientOriginalExtension();
-            $filePath = Storage::disk('public')->putFileAs("documents/perjanjianSewa", $uploadedFile, $filePenilaian);
+            $filePenilaian = "SuratPerjanjian-" . $request->get('noSuratPerjanjian') . time() . "." . $uploadedFile->getClientOriginalExtension();
+            $filePath = Storage::disk('biznet')->putFileAs("documents/perjanjianSewa", $uploadedFile, $filePenilaian);
         }else{
             $filePath="";
         }
@@ -80,16 +83,21 @@ class PerjanjianController extends Controller
         $PerjanjianSewa = json_encode([
             'IdPermohonan' => $request->get('permohonanSewa'),
             'NoSuratPerjanjian' => $request->get('noSuratPerjanjian'),
-            'TanggalDisahkan' => $request->get('tanggalDisahkan'),
-            'TanggalAwal' => $request->get('tanggalAwal'),
-            'TanggalAkhir' => $request->get('tanggalAkhir'),
+            'TanggalDisahkan' => date("m/d/Y", strtotime($request->get('tanggalDisahkan'))),
+            'TanggalAwal' => date("m/d/Y", strtotime($request->get('tanggalAwal'))),
+            'TanggalAkhir' => date("m/d/Y", strtotime($request->get('tanggalAkhir'))),
             'Keterangan'  => $request->get('keterangan'),
             'DisahkanOleh' => $request->get('disahkanOleh'),
             'FileSuratPerjanjian' => $filePath,
-            'Status' => '0',
-            'CreateBy' => '1',
+            'Status' => $this->stat,
+            'CreateBy' => Auth::user()->id,
+            'LuasTanah' => $request->get('luasTanah'),
+            'LuasBangunan' => $request->get('luasBangunan'),
+            'LamaSewa' => $request->get('lamaSewa'),
             'SaksiPerjanjianSewa' => $saksiPerjanjianSewa
         ]);
+
+        //dd($PerjanjianSewa);
     
             $response = DB::statement('CALL insert_perjanjianSewa(:dataPerjanjianSewa)', ['dataPerjanjianSewa' => $PerjanjianSewa]);
 
@@ -171,20 +179,22 @@ class PerjanjianController extends Controller
     {      
         $id = $request->id;
 
-        $statusData = DB::select('CALL view_statusById('  . $id . ')');
-        $status = $statusData[0];
+        $perjanjianData = DB::select('CALL view_perjanjianSewaById(?)', [$id]);
 
-        //dd($fieldEducation);
+        dd($perjanjianData);
 
-        if ($status) {
+        if ($perjanjianData) {
+            
+            $perjanjianSewa = $perjanjianData[0];
+            
             return response()->json([
                 'status'=> 200,
-                'status' => $status
+                'perjanjianSewa' => $perjanjianSewa
             ]);
         }else{
             return response()->json([
                 'status'=> 404,
-                'message' => 'Data Status Tidak Ditemukan.'
+                'message' => 'Data Perjanjian Sewa Tidak Ditemukan.'
             ]);
         }
     }

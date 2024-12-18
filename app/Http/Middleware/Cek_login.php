@@ -27,6 +27,6 @@ class Cek_login
         if ($userRole == $roles)
             return $next($request);
 
-        return redirect('login')->with('error', "Anda Tidak Punya Akses Untuk Login");
+        return redirect('/dasboard')->with('error', "Anda Tidak Punya Akses Untuk Login");
     }
 }

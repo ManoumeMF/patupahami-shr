@@ -1,5 +1,10 @@
 @extends('layouts.admin.template')
 @section('content')
+<style>
+    input[type=number] {
+        text-align: right;
+    }
+</style>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -252,15 +257,25 @@
                                                     Nama Penilai Tidak Boleh Kosong
                                                 </div>
                                             </div>
-                                            <div class="col-xl-12">
-                                                <label for="nama-penilai" class="form-label">Nominal Tarif Objek
+                                            <div class="col-xl-4">
+                                                <label for="nominal-tarif" class="form-label">Tarif Objek
                                                     Retribusi</label>
                                                 <input type="text" class="form-control" id="tarif-objek"
                                                     name="tarifObjek"
-                                                    placeholder="Masukkan Nominal Tarif Objek Retribusi" required>
+                                                    placeholder="Masukkan Tarif Objek Retribusi" required>
                                                 <div class="invalid-feedback">
                                                     Nominal Tarif Objek Retribusi Tidak Boleh Kosong
                                                 </div>
+                                            </div>
+                                            <div class="col-xl-4">
+                                                <label for="harga-tanah" class="form-label">Harga Tanah</label>
+                                                <input type="number" class="form-control" id="harga-tanah" min="0"
+                                                    value="0" name="hargaTanah" placeholder="Masukkan Harga Tanah">
+                                            </div>
+                                            <div class="col-xl-4">
+                                                <label for="harga-Bangunan" class="form-label">Harga Bangunan</label>
+                                                <input type="number" class="form-control" id="harga-bangunan"min="0"
+                                                value="0" name="hargaBangunan" placeholder="Masukkan Harga Bangunan">
                                             </div>
                                             <div class="col-xl-12">
                                                 <label for="keterangan" class="form-label">Keterangan</label>

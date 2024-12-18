@@ -14,7 +14,7 @@ class JenisJangkaWaktuController extends Controller
     {
         $JangkaWaktuType = DB::select('CALL viewAll_jenisJangkaWaktu()'); 
 
-        return view('admin.PengaturanDanKonfigurasi.JenisJangkaWaktu.index', compact('JangkaWaktuType'));
+        return view('admin.PengaturanDanKonfigurasi.jenisJangkaWaktu.index', compact('JangkaWaktuType'));
 
         //return view('admin.PengaturanDanKonfigurasi.JenisStatus.index');
         
@@ -22,7 +22,7 @@ class JenisJangkaWaktuController extends Controller
 
     public function create()
     {
-        return view('admin.PengaturanDanKonfigurasi.JenisJangkaWaktu.create');
+        return view('admin.PengaturanDanKonfigurasi.jenisJangkaWaktu.create');
     }
 
     public function store(Request $request)
@@ -40,7 +40,7 @@ class JenisJangkaWaktuController extends Controller
         if ($response) {
             return redirect()->route('jenisJangkaWaktu.index')->with('success', 'Perioditas Berhasil Ditambahkan!');
         } else {
-            return redirect()->route('JenisJangkaWaktu.create')->with('error', 'Perioditas Gagal Disimpan!');
+            return redirect()->route('jenisJangkaWaktu.create')->with('error', 'Perioditas Gagal Disimpan!');
         }
     }
 
@@ -50,9 +50,9 @@ class JenisJangkaWaktuController extends Controller
         $JangkaWaktuType = $JangkaWaktuTypeData[0];
 
         if ($JangkaWaktuType) {
-            return view('admin.PengaturanDanKonfigurasi.JenisJangkaWaktu.edit', ['JangkaWaktuType' => $JangkaWaktuType]);
+            return view('admin.PengaturanDanKonfigurasi.jenisJangkaWaktu.edit', ['JangkaWaktuType' => $JangkaWaktuType]);
         } else {
-            return redirect()->route('JenisJangkaWaktu.index')->with('error', 'Perioditas Tidak Ditemukan!');
+            return redirect()->route('jenisJangkaWaktu.index')->with('error', 'Perioditas Tidak Ditemukan!');
         }
     }
 
@@ -74,7 +74,7 @@ class JenisJangkaWaktuController extends Controller
         if ($response) {
             return redirect()->route('jenisJangkaWaktu.index')->with('success', 'Perioditas Berhasil Diubah!');
         } else {
-            return redirect()->route('JenisJangkaWaktu.edit', $id)->with('error', 'JPerioditas Gagal Diubah!');
+            return redirect()->route('jenisJangkaWaktu.edit', $id)->with('error', 'JPerioditas Gagal Diubah!');
         }
     } else {
         return redirect()->route('jenisJangkaWaktu.index')->with('error', 'Data Perioditas Tidak Ditemukan!');

@@ -25,8 +25,12 @@ use App\Http\Controllers\admin\WajibRetribusiController;
 use App\Http\Controllers\admin\JabatanController;
 use App\Http\Controllers\admin\PermohonanSewaController;
 use App\Http\Controllers\admin\PerjanjianController;
+use App\Http\Controllers\admin\TagihanController;
+use App\Http\Controllers\admin\PembayaranController;
 use App\Http\Controllers\admin\DropdownLokasiContoller;
 use App\Http\Controllers\admin\GolonganPangkatController;
+use App\Http\Controllers\admin\RoleController;
+use App\Http\Controllers\admin\PenggunaController;
 //use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Route;
 /*
@@ -43,7 +47,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get("/", [DashboardController::class, 'index'])->name('Dashboard.index');
+    Route::get("/dashboard", [DashboardController::class, 'index'])->name('Dashboard.index');
 
     // Route untuk Lokasi Objek Retribusi
     Route::get("/lokasi-objek-retribusi", [LokasiObjekRetribusiController::class, 'index'])->name('LokasiObjekRetribusi.index');
@@ -197,6 +201,24 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete("/pegawai/hapus", [PegawaiController::class, 'delete'])->name('Pegawai.delete');
     Route::get("/pegawai/detail", [PegawaiController::class, 'detail'])->name('Pegawai.detail');
 
+     // Route untuk Role
+     Route::get("/role", [RoleController::class, 'index'])->name('Role.index');
+     Route::get("/role/tambah", [RoleController::class, 'create'])->name('Role.create');
+     Route::post("/role/simpan", [RoleController::class, 'store'])->name('Role.store');
+     Route::get("/role/ubah/{id}", [RoleController::class, 'edit'])->name('Role.edit');
+     Route::post("/role/update/{id}", [RoleController::class, 'update'])->name('Role.update');
+     Route::get("/role/detail", [RoleController::class, 'detail'])->name('Role.detail');
+     Route::delete("/role/hapus", [RoleController::class, 'delete'])->name('Role.delete');
+
+      // Route untuk Pengguna
+      Route::get("/user", [PenggunaController::class, 'index'])->name('User.index');
+      Route::get("/user/tambah", [PenggunaController::class, 'create'])->name('User.create');
+      Route::post("/user/simpan", [PenggunaController::class, 'store'])->name('User.store');
+      Route::get("/user/ubah/{id}", [PenggunaController::class, 'edit'])->name('User.edit');
+      Route::post("/user/update/{id}", [PenggunaController::class, 'update'])->name('User.update');
+      Route::get("/user/detail", [PenggunaController::class, 'detail'])->name('User.detail');
+      Route::delete("/user/hapus", [PenggunaController::class, 'delete'])->name('User.delete');
+
     // Route untuk Permohonan Sewa
     Route::get("/permohonan-sewa", [PermohonanSewaController::class, 'index'])->name('PermohonanSewa.index');
     Route::get("/permohonan-sewa/tambah", [PermohonanSewaController::class, 'create'])->name('PermohonanSewa.create');
@@ -218,6 +240,26 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete("/perjanjian-sewa/hapus", [PerjanjianController::class, 'delete'])->name('Perjanjian.delete');
     Route::get("/perjanjian-sewa/detail", [PerjanjianController::class, 'detail'])->name('Perjanjian.detail');
     Route::get("/perjanjian-sewa/detail-permohonan/", [PerjanjianController::class, 'detailPermohonanToPerjanjian'])->name('Perjanjian.detailPermohonanToPerjanjian');
+
+    // Route untuk Tagihan Sewa
+    Route::get("/tagihan-sewa", [TagihanController::class, 'index'])->name('Tagihan.index');
+    Route::get("/tagihan-sewa/detail/{id}", [TagihanController::class, 'detail'])->name('Tagihan.detail');
+    Route::post("/tagihan-sewa/checkout", [TagihanController::class, 'checkout'])->name('Tagihan.checkout');
+    Route::get("/tagihan-sewa/singleCheckout/{idP}/{idT}", [TagihanController::class, 'singleCheckout'])->name('Tagihan.singleCheckout');
+
+    //Route untuk Pembayaran Sewa
+    Route::get("/pembayaran-sewa", [PembayaranController::class, 'index'])->name('Pembayaran.index');
+    Route::get("/pembayaran-sewa/detail/{id}", [PembayaranController::class, 'detail'])->name('Pembayaran.detail');
+    Route::get("/pembayaran-sewa/verifikasi/{id}", [PembayaranController::class, 'verifikasi'])->name('Pembayaran.verifikasi');
+    Route::post("/pembayaran-sewa/upload-bukti", [PembayaranController::class, 'uploadBukti'])->name('Pembayaran.uploadBukti');
+    Route::post("/pembayaran-sewa/simpan-bukti", [PembayaranController::class, 'storeBukti'])->name('Pembayaran.storeBukti');
+    Route::post("/pembayaran-sewa/verifikasi-pembayaran", [PembayaranController::class, 'storeVerifikasi'])->name('Pembayaran.storeVerifikasi');
+
+    //Route untuk DropdownLokasi
+    Route::get("/kota", [DropdownLokasiContoller::class, 'kota'])->name('DropdownLokasi.kota');
+    Route::get("/kecamatan", [DropdownLokasiContoller::class, 'kecamatan'])->name('DropdownLokasi.kecamatan');
+    Route::get("/kelurahan", [DropdownLokasiContoller::class, 'kelurahan'])->name('DropdownLokasi.kelurahan');
+    Route::get("/namaLengkapUser", [DropdownLokasiContoller::class, 'namaLengkapUser'])->name('DropdownLokasi.namaLengkapUser');
 
     Route::group(['middleware' => ['cek_login:Super Admin']], function () {
         // Route untuk Jenis Permohonan
@@ -277,16 +319,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post("/status/simpan-jenis-status", [StatusController::class, 'storeStatusType'])->name('Status.storeStatusType');
         //Route::get("/status/combo-jenis-status", [StatusController::class, 'getComboJenisStatus'])->name('Status.getComboJenisStatus');
 
-        //Route untuk DropdownLokasi
-        Route::get("/kota", [DropdownLokasiContoller::class, 'kota'])->name('DropdownLokasi.kota');
-        Route::get("/kecamatan", [DropdownLokasiContoller::class, 'kecamatan'])->name('DropdownLokasi.kecamatan');
-        Route::get("/kelurahan", [DropdownLokasiContoller::class, 'kelurahan'])->name('DropdownLokasi.kelurahan');
-
     });
 
-    Route::group(['middleware' => ['cek_login:Admin']], function () {
+    /*Route::group(['middleware' => ['cek_login:Admin']], function () {
 
-    });
+    });*/
 });
 
 

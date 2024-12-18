@@ -47,6 +47,7 @@
                     $('#d_alamat').text(response.pegawai.alamatLengkap);
                     $('#d_nomorPonsel').text(response.pegawai.nomorPonsel);
                     $('#d_nomorWA').text(response.pegawai.nomorWhatsapp);
+                    $('#d_email').text(response.pegawai.email);
                 }
             }
         });
@@ -217,7 +218,7 @@
 </div>
 <!-- End::row-1 -->
 
-<!-- Start:: Detail Wajib Retribusi-->
+<!-- Start:: Detail Pegawai-->
 <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="exampleModalXlLabel" style="display: none;"
     aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -309,6 +310,15 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-xl-6">
+                                            <div class="d-flex gap-3">
+                                                <div class="flex-fill">
+                                                    <h6 class="mb-1 fs-13">Email</h6>
+                                                    <span class="d-block fs-13 text-muted fw-normal"
+                                                        id="d_email"></span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -320,9 +330,9 @@
     </div>
 </div>
 </div>
-<!-- End::  Detail Tarif Objek -->
+<!-- End::  Detail Pegawai -->
 
-<!-- Start:: Delete Jangka Waktu Sewa-->
+<!-- Start:: Delete Pegawai-->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -353,6 +363,6 @@
         </div>
     </div>
 </div>
-<!-- End:: Delete Jangka Waktu Sewa -->
+<!-- End:: Delete Pegawai -->
 
 @endsection

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr" data-nav-layout="vertical" data-theme-mode="light" data-header-styles="light"
-    data-width="fullwidth" data-menu-styles="light" data-toggled="close" loader="enable">
+    data-width="fullwidth" data-menu-styles="light" data-toggled="close" loader="enable" style="--primary-rgb: 35, 144, 190;">
 
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -24,29 +24,6 @@
     <!-- Toastify JS -->
     <script src="{{ asset('admin_resources/assets/libs/toastify-js/src/toastify.js') }}"></script>
 
-    <!-- Filepond JS -->
-    <script src="{{ asset('admin_resources/assets/libs/filepond/filepond.min.js') }}"></script>
-    <script
-        src="{{ asset('admin_resources/assets/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.js') }}"></script>
-    <script
-        src="{{ asset('admin_resources/assets/libs/filepond-plugin-image-exif-orientation/filepond-plugin-image-exif-orientation.min.js') }}"></script>
-    <script
-        src="{{ asset('admin_resources/assets/libs/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.min.js') }}"></script>
-    <script
-        src="{{ asset('admin_resources/assets/libs/filepond-plugin-file-encode/filepond-plugin-file-encode.min.js') }}"></script>
-    <script
-        src="{{ asset('admin_resources/assets/libs/filepond-plugin-image-edit/filepond-plugin-image-edit.min.js') }}"></script>
-    <script
-        src="{{ asset('admin_resources/assets/libs/filepond-plugin-file-validate-type/filepond-plugin-file-validate-type.min.js') }}"></script>
-    <script
-        src="{{ asset('admin_resources/assets/libs/filepond-plugin-file-validate-type/filepond-plugin-file-validate-type.min.js') }}"></script>
-    <script
-        src="{{ asset('admin_resources/assets/libs/filepond-plugin-image-crop/filepond-plugin-image-crop.min.js') }}"></script>
-    <script
-        src="{{ asset('admin_resources/assets/libs/filepond-plugin-image-resize/filepond-plugin-image-resize.min.js') }}"></script>
-    <script
-        src="{{ asset('admin_resources/assets/libs/filepond-plugin-image-transform/filepond-plugin-image-transform.min.js') }}"></script>
-
     <!-- Google Maps API -->
     <script src="https://maps.google.com/maps/api/js?key=AIzaSyCW16SmpzDNLsrP-npQii6_8vBu_EJvEjA"></script>
 
@@ -55,10 +32,6 @@
 
     <!-- Gallery JS -->
     <script src="{{ asset('admin_resources/assets/libs/glightbox/js/glightbox.min.js') }}"></script>
-
-
-    <!-- Custom JS -->
-    <script src="{{ asset('admin_resources/assets/js/custom.js') }}"></script>
 
     <!-- Bootstrap Css -->
     <link id="style" href="{{ asset('admin_resources/assets/libs/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -113,8 +86,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var dataSession = {!! json_encode(Session::get('userSession')) !!};
-            var fotoPath = {!! json_encode(url('storage/')) !!};
-            //console.log(fotoPath + dataSession[0]["fotoUser"] );
+            var fotoPath = {!! json_encode(Storage::disk('biznet')->url('images' )) !!}
+            console.log(fotoPath + dataSession[0]["fotoUser"] );
             $('#nama-lengkap').text(dataSession[0]["namaLengkap"]);
             $("#fotoUser").attr("src", fotoPath + '/' + dataSession[0]["fotoUser"]);
         });
@@ -751,9 +724,6 @@
 
     <!-- Date & Time Picker JS -->
     <script src="{{ asset('admin_resources/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
-
-    <!-- Custom-Switcher JS -->
-    <script src="{{ asset('admin_resources/assets/js/custom-switcher.min.js') }}"></script>
 
     <!-- Form Validation JS -->
     <script src="{{ asset('admin_resources/assets/js/validation.js') }}"></script>

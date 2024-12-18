@@ -86,6 +86,7 @@
                     type: "GET",
                     data: data,
                     dataType: "json",
+                    delay: 250,
                     success: function (data) {
                         if (data) {
                             $('#kota').empty();
@@ -119,6 +120,7 @@
                     type: "GET",
                     data: data,
                     dataType: "json",
+                    delay: 250,
                     success: function (data) {
                         if (data) {
                             $('#distrik').empty();
@@ -150,6 +152,7 @@
                     type: "GET",
                     data: data,
                     dataType: "json",
+                    delay: 250,
                     success: function (data) {
                         if (data) {
                             $('#kelurahan').empty();
@@ -227,6 +230,12 @@
         });
     });
 </script>
+
+<style>
+    input[type=number] {
+        text-align: right;
+    }
+</style>
 
 <!-- Page Header -->
 <div class="my-4 page-header-breadcrumb d-flex align-items-center justify-content-between flex-wrap gap-2">
@@ -400,14 +409,16 @@
                                             </div>
                                             <div class="col-xl-6">
                                                 <label for="longitude" class="form-label">Longitude (Kordinat X)</label>
-                                                <input type="text" class="form-control" id="longitudu-x"
+                                                <input type="number" class="form-control" id="longitudu-x" min="0"
+                                                    step=".0000000001" title="Longitude" pattern="^\d+(?:\.\d{0,10})"
                                                     value="{{ $objekRetribusi->longitude }}" name="longitudu"
                                                     placeholder="Masukkan Kordinat X">
                                             </div>
                                             <div class="col-xl-6">
                                                 <label for="latitude" class="form-label">Latitude (Kordinat Y)</label>
-                                                <input type="text" class="form-control" id="latitude-y" name="latitude"
-                                                    value="{{ $objekRetribusi->latitute }}"
+                                                <input type="number" class="form-control" id="latitude-y"
+                                                    name="latitude" min="0" step=".0000000001" title="Latitude"
+                                                    pattern="^\d+(?:\.\d{0,10})" value="{{ $objekRetribusi->latitute }}"
                                                     placeholder="Masukkan Kordinat Y">
                                             </div>
 
@@ -422,52 +433,58 @@
                                             <div class="col-xl-4">
                                                 <label for="panajng-tanah" class="form-label">Panjang Tanah
                                                     (meter)</label>
-                                                <input type="text" class="form-control" id="panjang-tanah"
-                                                    value="{{ $objekRetribusi->panjangTanah }}" name="panjangTanah"
+                                                <input type="number" class="form-control" id="panjang-tanah"
+                                                    value="{{ $objekRetribusi->panjangTanah }}" name="panjangTanah"min="0"
+                                                    step=".01" title="Panjang Tanah" pattern="^\d+(?:\.\d{0,2})"
                                                     placeholder="Masukkan Panjang Tanah">
                                             </div>
                                             <div class="col-xl-4">
                                                 <label for="lebar-tanah" class="form-label">Lebar Tanah (meter)</label>
-                                                <input type="text" class="form-control" id="panjang-tanah"
-                                                    value="{{ $objekRetribusi->lebarTanah }}" name="lebarTanah"
+                                                <input type="number" class="form-control" id="panjang-tanah"
+                                                    value="{{ $objekRetribusi->lebarTanah }}" name="lebarTanah" min="0"
+                                                    step=".01" title="Lebar Tanah" pattern="^\d+(?:\.\d{0,2})"
                                                     placeholder="Masukkan Lebar Tanah">
                                             </div>
                                             <div class="col-xl-4">
                                                 <label for="luas-tanah" class="form-label">Luas Tanah (meter)</label>
-                                                <input type="text" class="form-control" id="luas-tanah" name="luasTanah"
-                                                    value="{{ $objekRetribusi->luasTanah }}"
+                                                <input type="number" class="form-control" id="luas-tanah"
+                                                    name="luasTanah" value="{{ $objekRetribusi->luasTanah }}" min="0"
+                                                    step=".01" title="Luas Tanah" pattern="^\d+(?:\.\d{0,2})"
                                                     placeholder="Masukkan Luas Tanah" name="luasTanah">
                                             </div>
                                             <div class="col-xl-4">
                                                 <label for="panjang-bangunan" class="form-label">Panjang Bangunan
                                                     (meter)</label>
-                                                <input type="text" class="form-control" id="panjang-bangunan"
-                                                    value="{{ $objekRetribusi->panjangBangunan }}"
+                                                <input type="number" class="form-control" id="panjang-bangunan"
+                                                    value="{{ $objekRetribusi->panjangBangunan }}" min="0"
+                                                    step=".01" title="Panjang Bangunan" pattern="^\d+(?:\.\d{0,2})"
                                                     placeholder="Masukkan Panjang Bangunan" name="panjangBangunan">
                                             </div>
                                             <div class="col-xl-4">
                                                 <label for="lebar-bangunan" class="form-label">Lebar Bangunan
                                                     (meter)</label>
-                                                <input type="text" class="form-control" id="lebar-bangunan"
-                                                    value="{{ $objekRetribusi->lebarBangunan }}"
+                                                <input type="number" class="form-control" id="lebar-bangunan"
+                                                    value="{{ $objekRetribusi->lebarBangunan }}" min="0"
+                                                    step=".01" title="Lebar Bangunan" pattern="^\d+(?:\.\d{0,2})"
                                                     placeholder="Masukkan Lebar Bangunan" name="lebarBangunan">
                                             </div>
                                             <div class="col-xl-4">
                                                 <label for="luas-bangunan" class="form-label">Luas Bangunan
                                                     (meter)</label>
-                                                <input type="text" class="form-control" id="luas-bangunan"
-                                                    value="{{ $objekRetribusi->luasBangunan }}"
+                                                <input type="number" class="form-control" id="luas-bangunan"
+                                                    value="{{ $objekRetribusi->luasBangunan }}" min="0"
+                                                    step=".01" title="Luas Bangunan" pattern="^\d+(?:\.\d{0,2})"
                                                     placeholder="Masukkan Luas Bangunan" name="luasBangunan">
                                             </div>
                                             <div class="col-xl-6">
                                                 <label for="jumlah-lantai" class="form-label">Jumlah Lantai</label>
-                                                <input type="text" class="form-control" id="jumlah-lantai"
+                                                <input type="number" class="form-control" id="jumlah-lantai" min="0"
                                                     value="{{ $objekRetribusi->jumlahLantai }}"
                                                     placeholder="Masukkan Jumlah Lantai" name="jumlahLantai">
                                             </div>
                                             <div class="col-xl-6">
                                                 <label for="kapasitas" class="form-label">Kapasitas (Orang)</label>
-                                                <input type="text" class="form-control" id="kapasitas"
+                                                <input type="number" class="form-control" id="kapasitas" min="0"
                                                     value="{{ $objekRetribusi->kapasitas }}"
                                                     placeholder="Masukkan Kapasitas" name="kapasitas">
                                             </div>
@@ -500,7 +517,8 @@
                                             <div class="col-xl-12">
                                                 <label for="keterangan" class="form-label">Keterangan</label>
                                                 <textarea class="form-control" id="keterangan" rows="3"
-                                                    name="keterangan" placeholder="Masukkan Keterangan">{{ $objekRetribusi->keterangan }}</textarea>
+                                                    name="keterangan"
+                                                    placeholder="Masukkan Keterangan">{{ $objekRetribusi->keterangan }}</textarea>
                                             </div>
                                             <div class="table-responsive">
                                                 <table class="table text-nowrap table-hover" id="tblFoto">

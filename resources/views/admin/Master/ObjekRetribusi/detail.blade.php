@@ -209,8 +209,13 @@
                                             <div class="d-flex gap-3">
                                                 <div class="flex-fill">
                                                     <h6 class="mb-1 fs-13">Batas Sebelah Utara</h6>
-                                                    <span
-                                                        class="d-block fs-13 text-muted fw-normal">{{ $objekRetribusi->batasUtara }}</span>
+                                                    <span class="d-block fs-13 text-muted fw-normal">
+                                                        @if(is_null($objekRetribusi->batasSelatan) || $objekRetribusi->batasSelatan == "null")
+                                                            {!! "" !!}
+                                                        @else
+                                                            {{ $objekRetribusi->batasUtara }}
+                                                        @endif
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -218,8 +223,13 @@
                                             <div class="d-flex gap-3">
                                                 <div class="flex-fill">
                                                     <h6 class="mb-1 fs-13">Batas Sebelah Selatan</h6>
-                                                    <span
-                                                        class="d-block fs-13 text-muted fw-normal">{{ $objekRetribusi->batasSelatan }}</span>
+                                                    <span class="d-block fs-13 text-muted fw-normal">
+                                                        @if(is_null($objekRetribusi->batasSelatan) || $objekRetribusi->batasSelatan == "null")
+                                                            {{ "" }}
+                                                        @else
+                                                            {{ $objekRetribusi->batasSelatan }}
+                                                        @endif
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -227,8 +237,13 @@
                                             <div class="d-flex gap-3">
                                                 <div class="flex-fill">
                                                     <h6 class="mb-1 fs-13">Batas Sebelah Timur</h6>
-                                                    <span
-                                                        class="d-block fs-13 text-muted fw-normal">{{ $objekRetribusi->batasTimur }}</span>
+                                                    <span class="d-block fs-13 text-muted fw-normal">
+                                                        @if(is_null($objekRetribusi->batasTimur) || $objekRetribusi->batasTimur == "null")
+                                                            {{ "" }}
+                                                        @else
+                                                            {{ $objekRetribusi->batasTimur }}
+                                                        @endif
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -236,8 +251,27 @@
                                             <div class="d-flex gap-3">
                                                 <div class="flex-fill">
                                                     <h6 class="mb-1 fs-13">Batas Sebelah Barat</h6>
-                                                    <span
-                                                        class="d-block fs-13 text-muted fw-normal">{{ $objekRetribusi->batasBarat }}</span>
+                                                    <span class="d-block fs-13 text-muted fw-normal">
+                                                        @if(is_null($objekRetribusi->batasBarat) || $objekRetribusi->batasBarat == "null")
+                                                            {{ "" }}
+                                                        @else
+                                                            {{ $objekRetribusi->batasBarat }}
+                                                        @endif
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-12">
+                                            <div class="d-flex gap-3">
+                                                <div class="flex-fill">
+                                                    <h6 class="mb-1 fs-13">Keterangan</h6>
+                                                    <span class="d-block fs-13 text-muted fw-normal">
+                                                        @if(is_null($objekRetribusi->keterangan) || $objekRetribusi->keterangan == "null")
+                                                            {{ "" }}
+                                                        @else
+                                                            {{ $objekRetribusi->keterangan }}
+                                                        @endif
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -245,11 +279,19 @@
                                             <div class="d-flex gap-3">
                                                 <div class="flex-fill"><br>
                                                     <h6 class="mb-1 fs-13">Gambar Denah Tanah</h6>
-                                                    <a target="_blank" href="{{Storage::disk('biznet')->url('/' . $objekRetribusi->gambarDenahTanah)}}"
-                                                        download="{{ $objekRetribusi->objekRetribusi }}"
-                                                        class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover text-decoration-underline">
-                                                        <i class="ri-download-2-line me-2"></i>Download Gambar/Dokumen
-                                                    </a>
+                                                    @if($objekRetribusi->gambarDenahTanah)
+                                                        <a target="_blank"
+                                                            href="{{Storage::disk('biznet')->url('/' . $objekRetribusi->gambarDenahTanah)}}"
+                                                            download="{{ $objekRetribusi->objekRetribusi }}"
+                                                            class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover text-decoration-underline">
+                                                            <i class="ri-download-2-line me-2"></i>Download Gambar/Dokumen
+                                                            Denah Tanah
+                                                        </a>
+                                                    @else
+                                                        <span class="d-block fs-13 text-muted fw-normal">File Gambar Denah
+                                                            Tanah Tidak Tersedia.
+                                                        </span>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -273,6 +315,10 @@
                                                             </a>
                                                         </div>
                                                     @endforeach
+                                                @else
+                                                    <span class="d-block fs-13 text-muted fw-normal">Foto-foto Objek Retribusi
+                                                        Tidak Tersedia.
+                                                    </span>
                                                 @endif
                                             </div>
                                         </div>

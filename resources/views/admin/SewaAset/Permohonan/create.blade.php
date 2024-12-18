@@ -10,18 +10,6 @@
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
         });
 
-        $(".wajib-retribusi").select2({
-            placeholder: "Pilih Nama Wajib Retribusi",
-            allowClear: true,
-            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-        });
-
-        $(".objek-retribusi").select2({
-            placeholder: "Pilih Nama Objek Retribusi",
-            allowClear: true,
-            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-        });
-
         $(".jangka-waktu").select2({
             placeholder: "Pilih Perioditas Sewa",
             allowClear: true,
@@ -48,7 +36,6 @@
 
         // jQuery button click event to add Anggota Keluarga row
         $("#tambahDokumen").on("click", function () {
-
             // Adding a row inside the tbody.
             $("#tblDokumen tbody").append('<tr>' +
                 '<td>' +
@@ -61,13 +48,13 @@
                 '@endforeach' +
                 '</select>' +
                 '<div class="invalid-feedback">' +
-                    'Dokumen Kelengkapan Tidak Boleh Kosong' +
+                'Dokumen Kelengkapan Tidak Boleh Kosong' +
                 '</div>' +
                 '</td>' +
                 '<td>' +
                 '<input class="file-dokumen form-control" type="file" id="fileDokumen" name="fileDokumen[]" accept="image/png, image/jpeg, image/gif, application/pdf" required>' +
                 '<div class="invalid-feedback">' +
-                    'File Dokumen Kelengkapan Tidak Boleh Kosong' +
+                'File Dokumen Kelengkapan Tidak Boleh Kosong' +
                 '</div>' +
                 '</td>' +
                 '<td>' +
@@ -85,9 +72,109 @@
                 dropdownParent: $("#tblDokumen")
                 //width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             });
+
         });
 
 
+        $('#jenisPermohonan').on('change', function () {
+            var idJenisPermohonan = $(this).val();
+
+            $("#flex-retribusi").empty();
+
+            if (idJenisPermohonan == 4) {
+                //console.log(idJenisPermohonan);
+                $("#flex-retribusi").append(
+                    '<div class="col-xl-4">' +
+                    '<label for="wajib-retribusi1" class="form-label">Nama Wajib Retribusi Pemohon</label>' +
+                    '<select class="wajib-retribusi1 form-control" name="wajibRetribusi" required>' +
+                    '<option></option>' +
+                    '@foreach ($wajibRetribusi as $wR)' +
+                        '<option value="{{ $wR->idWajibRetribusi }}">{{ $wR->namaWajibRetribusi }}' +
+                        '</option>' +
+                    '@endforeach' +
+                    '</select>' +
+                    '<div class="invalid-feedback">' +
+                    'Nama Wajib Retribusi Pemohon Tidak Boleh Kosong' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="col-xl-4">' +
+                    '<label for="wajib-retribusi2" class="form-label">Nama Wajib Retribusi Sebelumnya</label>' +
+                    '<select class="wajib-retribusi2 form-control" name="wajibRetribusiSebelumnya" required>' +
+                    '<option></option>' +
+                    '@foreach ($wajibRetribusi as $wR)' +
+                        '<option value="{{ $wR->idWajibRetribusi }}"> {{ $wR->namaWajibRetribusi }}' +
+                        '</option>' +
+                    '@endforeach' +
+                    '</select>' +
+                    '<div class="invalid-feedback">' +
+                    'Nama Wajib Retribusi Sebelumnya Tidak Boleh Kosong' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="col-xl-4">' +
+                    '<label for="objek-retribusi" class="form-label">Objek Retribusi</label>' +
+                    '<select class="objek-retribusi form-control" name="objekRetribusi" required>' +
+                    '<option></option>' +
+                    '@foreach ($objekRetribusi as $oR)' +
+                        '<option value="{{ $oR->idObjekRetribusi }}">{{ $oR->kodeObjekRetribusi }} - {{ $oR->objekRetribusi }}' +
+                        '</option>' +
+                    '@endforeach' +
+                    '</select>' +
+                    '<div class="invalid-feedback">' +
+                    'Objek Retribusi Tidak Boleh Kosong' +
+                    '</div>' +
+                    '</div>'
+                );
+            }else{
+                $("#flex-retribusi").append(
+                    '<div class="col-xl-6">' +
+                    '<label for="wajib-retribusi1" class="form-label">Nama Wajib Retribusi Pemohon</label>' +
+                    '<select class="wajib-retribusi1 form-control" name="wajibRetribusi" required>' +
+                    '<option></option>' +
+                    '@foreach ($wajibRetribusi as $wR)' +
+                        '<option value="{{ $wR->idWajibRetribusi }}">{{ $wR->namaWajibRetribusi }}' +
+                        '</option>' +
+                    '@endforeach' +
+                    '</select>' +
+                    '<div class="invalid-feedback">' +
+                    'Nama Wajib Retribusi Pemohon Tidak Boleh Kosong' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="col-xl-6">' +
+                    '<label for="objek-retribusi" class="form-label">Objek Retribusi</label>' +
+                    '<select class="objek-retribusi form-control" name="objekRetribusi" required>' +
+                    '<option></option>' +
+                    '@foreach ($objekRetribusi as $oR)' +
+                        '<option value="{{ $oR->idObjekRetribusi }}">{{ $oR->kodeObjekRetribusi }} - {{ $oR->objekRetribusi }}' +
+                        '</option>' +
+                    '@endforeach' +
+                    '</select>' +
+                    '<div class="invalid-feedback">' +
+                    'Objek Retribusi Tidak Boleh Kosong' +
+                    '</div>' +
+                    '</div>'
+                );
+            }
+
+
+            $(".wajib-retribusi1").select2({
+                placeholder: "Pilih Nama Wajib Retribusi Pemohon",
+                allowClear: true,
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            });
+
+            $(".wajib-retribusi2").select2({
+                placeholder: "Pilih Nama Wajib Retribusi Sebelumnya",
+                allowClear: true,
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            });
+
+            $(".objek-retribusi").select2({
+                placeholder: "Pilih Nama Objek Retribusi",
+                allowClear: true,
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            });
+
+        });
 
         $(document).on('click', '#delFoto', function () {
             $(this).closest('tr').remove();
@@ -118,7 +205,8 @@
 <div class="row">
     <div class="col-xl-12">
 
-        <form class="row g-3 needs-validation" action="{{route('PermohonanSewa.store')}}" method="post" enctype="multipart/form-data" novalidate>
+        <form class="row g-3 needs-validation" action="{{route('PermohonanSewa.store')}}" method="post"
+            enctype="multipart/form-data" novalidate>
             {{ csrf_field() }}
             <div class="card custom-card">
                 <div class="card-header justify-content-between">
@@ -137,7 +225,7 @@
                                                 <label for="jenis-permohonan" class="form-label">Jenis
                                                     Permohonan</label>
                                                 <select class="jenis-permohonan form-control" name="jenisPermohonan"
-                                                    required>
+                                                    id="jenisPermohonan" required>
                                                     <option></option>
                                                     @foreach ($jenisPermohonan as $jP)
                                                         <option value="{{ $jP->idJenisPermohonan }}">
@@ -152,42 +240,15 @@
                                             <div class="col-xl-6">
                                                 <label for="nomor-permohonan" class="form-label">Nomor
                                                     Permohonan</label>
-                                                <input type="text" class="form-control" id="nomorPermohonan" name="nomorPermohonan"
-                                                    placeholder="Masukkan Nomor Permohonan" required>
+                                                <input type="text" class="form-control" id="nomorPermohonan"
+                                                    name="nomorPermohonan" placeholder="Masukkan Nomor Permohonan"
+                                                    required>
                                                 <div class="invalid-feedback">
                                                     Nomor Permohonan Tidak Boleh Kosong
                                                 </div>
                                             </div>
-                                            <div class="col-xl-6">
-                                                <label for="wajib-retribusi" class="form-label">Nama Wajib
-                                                    Retribusi</label>
-                                                <select class="wajib-retribusi form-control" name="wajibRetribusi"
-                                                    required>
-                                                    <option></option>
-                                                    @foreach ($wajibRetribusi as $wR)
-                                                        <option value="{{ $wR->idWajibRetribusi }}">
-                                                            {{ $wR->namaWajibRetribusi }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Nama Wajib Retribusi Tidak Boleh Kosong
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-6">
-                                                <label for="objek-retribusi" class="form-label">Objek Retribusi</label>
-                                                <select class="objek-retribusi form-control" name="objekRetribusi"
-                                                    required>
-                                                    <option></option>
-                                                    @foreach ($objekRetribusi as $oR)
-                                                        <option value="{{ $oR->idObjekRetribusi }}">
-                                                            {{ $oR->kodeObjekRetribusi }} - {{ $oR->objekRetribusi }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Objek Retribusi Tidak Boleh Kosong
-                                                </div>
+                                            <div id="flex-retribusi" class="row gy-2 col-xl-12">
+
                                             </div>
                                             <div class="col-xl-4">
                                                 <label for="peruntukan-sewa" class="form-label">Peruntukan Sewa</label>
@@ -228,8 +289,7 @@
                                             </div>
                                             <div class="col-xl-2">
                                                 <label for="satuan" class="form-label">Satuan</label>
-                                                <select class="satuan form-control" name="satuan"
-                                                    required>
+                                                <select class="satuan form-control" name="satuan" required>
                                                     <option></option>
                                                     @foreach ($satuan as $sT)
                                                         <option value="{{ $sT->idSatuan }}">

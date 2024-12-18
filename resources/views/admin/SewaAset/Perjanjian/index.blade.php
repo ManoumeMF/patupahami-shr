@@ -155,11 +155,24 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td>{{ $pS->tanggalDisahkan }}</td>
-                                    <td>{{ $pS->objekRetribusi }}</td>
-                                    <td>{{ $pS->jenisJangkaWaktu }}</td>
+                                    <td>{{ date('d F Y', strtotime($pS->tanggalDisahkan)) }}</td>
                                     <td>
-                                        <span class="badge bg-primary">Baru</span>
+                                        <div class="d-flex">
+                                            <div class="ms-2">
+                                                <p class="fw-semibold mb-0 d-flex align-items-center">{{ $pS->kodeObjekRetribusi }}</p>
+                                                <p class="fs-12 text-muted mb-0">{{ $pS->objekRetribusi }}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{ $pS->lamaSewa . ' ' . $pS->namaSatuan }}</td>
+                                    <td>
+                                        @if($pS->idStatus==6)
+                                        <span class="badge bg-primary">{{ $pS->namaStatus }}</span>
+                                        @elseif($pS->idStatus==7)
+                                        <span class="badge bg-success">{{ $pS->namaStatus }}</span>
+                                        @elseif($pS->idStatus==8)
+                                        <span class="badge bg-danger">{{ $pS->namaStatus }}</span>
+                                        @endif
                                     </td>
                                     <td>
                                         <div class="dropdown">

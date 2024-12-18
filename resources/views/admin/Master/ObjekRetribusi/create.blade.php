@@ -121,6 +121,7 @@
                     type: "GET",
                     data: data,
                     dataType: "json",
+                    delay: 250,
                     success: function (data) {
                         if (data) {
                             $('#kota').empty();
@@ -154,10 +155,12 @@
                     type: "GET",
                     data: data,
                     dataType: "json",
+                    delay: 250,
                     success: function (data) {
                         if (data) {
                             $('#distrik').empty();
                             $('#distrik').prop('disabled', false);
+                            $('#distrik').append('<option>Pilih Kecamatan</option>');
                             $.each(data, function (key, kecamatan) {
                                 $('#distrik').append('<option value="' + kecamatan.dis_id + '">' + kecamatan.dis_name + '</option>');
                             });
@@ -185,10 +188,12 @@
                     type: "GET",
                     data: data,
                     dataType: "json",
+                    delay: 250,
                     success: function (data) {
                         if (data) {
                             $('#kelurahan').empty();
                             $('#kelurahan').prop('disabled', false);
+                            $('#kelurahan').append('<option>Pilih Kelurahan/Desa</option>');
                             $.each(data, function (key, kelurahan) {
                                 $('#kelurahan').append('<option value="' + kelurahan.subdis_id + '">' + kelurahan.subdis_name + '</option>');
                             });
@@ -203,6 +208,12 @@
         });
     });
 </script>
+
+<style>
+    input[type=number] {
+        text-align: right;
+    }
+</style>
 
 <!-- Page Header -->
 <div class="my-4 page-header-breadcrumb d-flex align-items-center justify-content-between flex-wrap gap-2">
@@ -359,13 +370,21 @@
                                             </div>
                                             <div class="col-xl-6">
                                                 <label for="longitude" class="form-label">Longitude (Kordinat X)</label>
-                                                <input type="text" class="form-control" id="longitudu-x"
-                                                    name="longitudu" placeholder="Masukkan Kordinat X">
+                                                <input type="number" class="form-control" id="longitudu-x" min="0"
+                                                    step=".0000000001" title="Longitude" pattern="^\d+(?:\.\d{0,10})" 
+                                                    value="0" name="longitudu" placeholder="Masukkan Kordinat X">
+                                                <div class="invalid-feedback">
+                                                    Format angka longitudenya salah!
+                                                </div>
                                             </div>
                                             <div class="col-xl-6">
                                                 <label for="latitude" class="form-label">Latitude (Kordinat Y)</label>
-                                                <input type="text" class="form-control" id="latitude-y" name="latitude"
-                                                    placeholder="Masukkan Kordinat Y">
+                                                <input type="number" class="form-control" id="latitude-y"  min="0"
+                                                    step=".0000000001" title="Latitude" pattern="^\d+(?:\.\d{0,10})"
+                                                    name="latitude" value="0" placeholder="Masukkan Kordinat Y">
+                                                <div class="invalid-feedback">
+                                                    Format angka latitudenya salah!
+                                                </div>
                                             </div>
 
                                         </div>
@@ -379,46 +398,54 @@
                                             <div class="col-xl-4">
                                                 <label for="panajng-tanah" class="form-label">Panjang Tanah
                                                     (meter)</label>
-                                                <input type="text" class="form-control" id="panjang-tanah"
-                                                    name="panjangTanah" placeholder="Masukkan Panjang Tanah">
+                                                <input type="number" class="form-control" id="panjang-tanah" min="0"
+                                                    step=".01" title="Panjang Tanah" pattern="^\d+(?:\.\d{0,2})" 
+                                                    value="0.00" name="panjangTanah" placeholder="Masukkan Panjang Tanah">
                                             </div>
                                             <div class="col-xl-4">
                                                 <label for="lebar-tanah" class="form-label">Lebar Tanah (meter)</label>
-                                                <input type="text" class="form-control" id="panjang-tanah"
-                                                    name="lebarTanah" placeholder="Masukkan Lebar Tanah">
+                                                <input type="number" class="form-control" id="panjang-tanah" min="0"
+                                                    step=".01" title="Lebar Tanah" pattern="^\d+(?:\.\d{0,2})" 
+                                                    value="0.00" name="lebarTanah" placeholder="Masukkan Lebar Tanah">
                                             </div>
                                             <div class="col-xl-4">
                                                 <label for="luas-tanah" class="form-label">Luas Tanah (meter)</label>
-                                                <input type="text" class="form-control" id="luas-tanah" name="luasTanah"
-                                                    placeholder="Masukkan Luas Tanah" name="luasTanah">
+                                                <input type="number" class="form-control" id="luas-tanah"
+                                                    step=".01" title="Luas Tanah" pattern="^\d+(?:\.\d{0,2})" 
+                                                    name="luasTanah" min="0" value="0.00" placeholder="Masukkan Luas Tanah">
                                             </div>
                                             <div class="col-xl-4">
                                                 <label for="panjang-bangunan" class="form-label">Panjang Bangunan
                                                     (meter)</label>
-                                                <input type="text" class="form-control" id="panjang-bangunan"
-                                                    placeholder="Masukkan Panjang Bangunan" name="panjangBangunan">
+                                                <input type="number" class="form-control" id="panjang-bangunan" min="0"
+                                                    step=".01" title="Panjang Bangunan" pattern="^\d+(?:\.\d{0,2})" 
+                                                    value="0.00" placeholder="Masukkan Panjang Bangunan"
+                                                    name="panjangBangunan">
                                             </div>
                                             <div class="col-xl-4">
                                                 <label for="lebar-bangunan" class="form-label">Lebar Bangunan
                                                     (meter)</label>
-                                                <input type="text" class="form-control" id="lebar-bangunan"
-                                                    placeholder="Masukkan Lebar Bangunan" name="lebarBangunan">
+                                                <input type="number" class="form-control" id="lebar-bangunan" min="0"
+                                                    step=".01" title="Lebar Bangunan" pattern="^\d+(?:\.\d{0,2})" 
+                                                    value="0.00" placeholder="Masukkan Lebar Bangunan"
+                                                    name="lebarBangunan">
                                             </div>
                                             <div class="col-xl-4">
                                                 <label for="luas-bangunan" class="form-label">Luas Bangunan
                                                     (meter)</label>
-                                                <input type="text" class="form-control" id="luas-bangunan"
-                                                    placeholder="Masukkan Luas Bangunan" name="luasBangunan">
+                                                <input type="number" class="form-control" id="luas-bangunan" min="0"
+                                                    step=".01" title="Luas Bangunan" pattern="^\d+(?:\.\d{0,2})" 
+                                                    value="0.00" placeholder="Masukkan Luas Bangunan" name="luasBangunan">
                                             </div>
                                             <div class="col-xl-6">
                                                 <label for="jumlah-lantai" class="form-label">Jumlah Lantai</label>
-                                                <input type="text" class="form-control" id="jumlah-lantai"
-                                                    placeholder="Masukkan Jumlah Lantai" name="jumlahLantai">
+                                                <input type="number" class="form-control" id="jumlah-lantai" min="0"
+                                                    value="0" placeholder="Masukkan Jumlah Lantai" name="jumlahLantai">
                                             </div>
                                             <div class="col-xl-6">
                                                 <label for="kapasitas" class="form-label">Kapasitas (Orang)</label>
-                                                <input type="text" class="form-control" id="kapasitas"
-                                                    placeholder="Masukkan Kapasitas" name="kapasitas">
+                                                <input type="number" class="form-control" id="kapasitas" min="0"
+                                                    value="0" placeholder="Masukkan Kapasitas" name="kapasitas">
                                             </div>
                                             <div class="col-xl-6">
                                                 <label for="jumlah-lantai" class="form-label">Batas Sebelah

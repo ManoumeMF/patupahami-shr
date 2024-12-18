@@ -37,5 +37,13 @@ class DropdownLokasiContoller extends Controller
         return response()->json($kelurahan);
     }
 
+    public function namaLengkapUser(Request $request)
+    {
+        $idJenisUser = $request->idJenisUser;
+
+        $jenisUser = DB::select('CALL cbo_namaLengkapUser('  . $idJenisUser . ')'); 
+
+        return response()->json($jenisUser);
+    }
     
 }

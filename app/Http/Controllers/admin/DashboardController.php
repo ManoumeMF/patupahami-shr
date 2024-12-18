@@ -11,10 +11,14 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // Retrieve all non-deleted Bidang records
-        //$bidang = DB::select('CALL viewAll_bidang()');
+        // Retrieve data to widget on dasboard page
+        $permohonanBaruTemp = DB::select('CALL view_permohonanBaru()');
+        $permohonanBaru = $permohonanBaruTemp[0];
 
-        return view('admin.Dashboard.index');
+        $permohonanDisetujuiTemp = DB::select('CALL view_permohonanDisetujui()');
+        $permohonanDisetujui = $permohonanDisetujuiTemp[0];
+
+        return view('admin.Dashboard.index', compact('permohonanBaru', 'permohonanDisetujui'));
         //return view('admin.PengaturanDanKonfigurasi.Bidang.index', ['bidang' => $bidang]);
     }
 }

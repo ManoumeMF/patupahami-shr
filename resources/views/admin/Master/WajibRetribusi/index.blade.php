@@ -103,7 +103,7 @@
                     const toast = new bootstrap.Toast(primarytoastDeleteSuccess)
                     toast.show()
 
-                    setTimeout("window.location='{{ route('WajibRetribusi.index') }}'", 1500);
+                    setTimeout("window.location='{{ route('WajibRetribusi.index') }}'", 1200);
                 }
             }
         });
@@ -167,7 +167,7 @@
                                                         class="w-100 h-100" alt="..."></span>
                                             @else
                                                 <span class="avatar avatar-md avatar-square bg-light"><img
-                                                        src="{{ asset('admin_resources/assets/images/user-general/no_image1.png') }}"
+                                                        src="{{ asset('admin_resources/assets/images/user-general/no_picture.png') }}"
                                                         class="w-100 h-100" alt="..."></span>
                                             @endif
                                             <div class="ms-2">

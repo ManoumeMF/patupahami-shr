@@ -81,7 +81,7 @@
 
         //console.log(statusPenilaian);
 
-        if (statusPenilaian===null || statusPenilaian === "") {
+        if (statusPenilaian==="null" || statusPenilaian === "") {
             $('#checkebox-md').prop('checked', false);
             $(".tanggal-dinilai").prop("disabled", true); // disable the input field
             $("#namaPenilai").prop("disabled", true); // disable the input field
@@ -251,7 +251,7 @@
                                             <div class="col-xl-4">
                                                 <label for="nama-penilai" class="form-label">Status Penilaian</label>
                                                 <div style="display: flex;  align-items: center;  height: 50%;" class="form-check form-check-md d-flex align-items-center">
-                                                    <input class="form-check-input" type="checkbox" value="1"
+                                                    <input class="form-check-input" type="checkbox" value="0"
                                                         id="checkebox-md" name="statusPenilaian">
                                                     <label class="form-check-label" for="statusPenilaian"
                                                         style="margin-left: 5px; padding-top:2px;">
@@ -268,7 +268,7 @@
                                                     Nama Penilai Tidak Boleh Kosong
                                                 </div>
                                             </div>
-                                            <div class="col-xl-12">
+                                            <div class="col-xl-4">
                                                 <label for="nama-penilai" class="form-label">Nominal Tarif Objek
                                                     Retribusi</label>
                                                 <input type="text" class="form-control" id="tarif-objek"
@@ -277,6 +277,16 @@
                                                 <div class="invalid-feedback">
                                                     Nominal Tarif Objek Retribusi Tidak Boleh Kosong
                                                 </div>
+                                            </div>
+                                            <div class="col-xl-4">
+                                                <label for="harga-tanah" class="form-label">Harga Tanah</label>
+                                                <input type="number" class="form-control" id="harga-tanah" min="0"
+                                                    value="{{ $tarifObjek->hargaTanah }}" name="hargaTanah" placeholder="Masukkan Harga Tanah">
+                                            </div>
+                                            <div class="col-xl-4">
+                                                <label for="harga-Bangunan" class="form-label">Harga Bangunan</label>
+                                                <input type="number" class="form-control" id="harga-bangunan"min="0"
+                                                value="{{ $tarifObjek->hargaBangunan }}" name="hargaBangunan" placeholder="Masukkan Harga Bangunan">
                                             </div>
                                             <div class="col-xl-12">
                                                 <label for="keterangan" class="form-label">Keterangan</label>

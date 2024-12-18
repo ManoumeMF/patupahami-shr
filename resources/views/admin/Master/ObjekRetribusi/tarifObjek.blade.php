@@ -28,8 +28,9 @@
                     }).show();
                 } else {
                     //console.log(response.fieldEducation.nama_bidang_pendidikan)
-                    var filePath = response.tarifObjek.fileHasilPenilaian;
-                    var fileDokumen = {!! json_encode(Storage::disk('biznet')->url('/documents/tarifObjekRetribusi/' )) !!};
+
+                    var fileExist = response.tarifObjek.fileHasilPenilaian;
+                    var fileDokumen = {!! json_encode(Storage::disk('biznet')->url('/documents/tarifObjekRetribusi/')) !!};
 
                     $('#d_kodeObjek').text(response.tarifObjek.kodeObjekRetribusi);
                     $('#d_namaObjek').text(response.tarifObjek.objekRetribusi);
@@ -49,10 +50,23 @@
                     $('#d_tanggalDinilai').text(response.tarifObjek.tanggalDinilai);
                     $('#d_namaPenilai').text(response.tarifObjek.namaPenilai);
                     $('#d_tarifObjek').text("Rp. " + response.tarifObjek.nominalTarif);
+                    $('#d_hargaTanah').text("Rp. " + response.tarifObjek.hargaTanah);
+                    $('#d_hargaBangunan').text("Rp. " + response.tarifObjek.hargaBangunan);
                     $('#d_keterangan').text(response.tarifObjek.keterangan);
-                    $('#d_fileDokumen').attr("href", fileDokumen + response.tarifObjek.fileName);
-                    $('#d_fileDokumen').attr("download", response.tarifObjek.fileHasilPenilaian);
-                    $('#d_fileName').text(response.tarifObjek.fileName);
+                    if (fileExist) {
+                        $(this).parent('.filePenilaian').remove();
+                        $("#filePenilaian").append(
+                            '<a href="' + (fileDokumen + response.tarifObjek.fileName) + '" download="' + response.tarifObjek.fileHasilPenilaian + '" class="btn btn-primary label-btn"' +
+                            '<i class="ri-download-2-line label-btn-icon me-3"></i><span' +
+                            'id="d_fileName">' + response.tarifObjek.fileName + '</span></a>'
+                        );
+                    } else { 
+                        $(this).parent('.filePenilaian').remove(); 
+                        $("#filePenilaian").append(
+                            '<span class="d-block fs-13 text-muted fw-normal"' +
+                            'id="d_fileName">File Penilaian Tarif Tidak Tersedia</span>'
+                        );
+                    }
                 }
             }
         });
@@ -153,11 +167,11 @@
                 <table id="responsiveDataTable" class="table table-bordered text-nowrap w-100">
                     <thead>
                         <tr>
-                            <th>Kode Objek Retribusi</th>
                             <th>Objek Retribusi</th>
-                            <th>No. Bangunan</th>
+                            <th>Alamat</th>
                             <th>Perioditas</th>
                             <th>Tarif Objek</th>
+                            <th>Harga Tanah</th>
                             <th>Keterangan</th>
                             <th class="text-center" style="width: 10px;">Aksi</th>
                         </tr>
@@ -166,11 +180,22 @@
                         @if (isset($tarifRetribusi) && count($tarifRetribusi) > 0)
                             @foreach ($tarifRetribusi as $tR)
                                 <tr>
-                                    <td>{{ $tR->kodeObjekRetribusi }}</td>
-                                    <td>{{ $tR->objekRetribusi }}</td>
-                                    <td>{{ $tR->noBangunan }}</td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <span class="avatar avatar-md avatar-square bg-light"><img
+                                                    src="{{ asset('admin_resources/assets/images/user-general/no_image1.png') }}"
+                                                    class="w-100 h-100" alt="..."></span>
+                                            <div class="ms-2">
+                                                <p class="fw-semibold mb-0 d-flex align-items-center"><a
+                                                        href="javascript:void(0);">{{ $tR->kodeObjekRetribusi }}</a></p>
+                                                <p class="fs-12 text-muted mb-0">{{ $tR->noBangunan }} - {{ $tR->objekRetribusi }}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{ $tR->alamatLengkap }}</td>
                                     <td>{{ $tR->jenisJangkaWaktu }}</td>
                                     <td>{{ $tR->nominalTarif }}</td>
+                                    <td>{{ $tR->hargaTanah }}</td>
                                     <td>{{ $tR->keterangan }}</td>
                                     <td>
                                         <div class="dropdown">
@@ -362,7 +387,8 @@
                                             <div class="d-flex gap-3">
                                                 <div class="flex-fill">
                                                     <h6 class="mb-1 fs-13">Perioditas</h6>
-                                                    <span class="d-block fs-13 text-muted fw-normal" id="d_perioditas"></span>
+                                                    <span class="d-block fs-13 text-muted fw-normal"
+                                                        id="d_perioditas"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -370,7 +396,8 @@
                                             <div class="d-flex gap-3">
                                                 <div class="flex-fill">
                                                     <h6 class="mb-1 fs-13">Tanggal Dinilai</h6>
-                                                    <span class="d-block fs-13 text-muted fw-normal" id="d_tanggalDinilai"></span>
+                                                    <span class="d-block fs-13 text-muted fw-normal"
+                                                        id="d_tanggalDinilai"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -378,15 +405,38 @@
                                             <div class="d-flex gap-3">
                                                 <div class="flex-fill">
                                                     <h6 class="mb-1 fs-13">Nama Penilai</h6>
-                                                    <span class="d-block fs-13 text-muted fw-normal" id="d_namaPenilai"></span>
+                                                    <span class="d-block fs-13 text-muted fw-normal"
+                                                        id="d_namaPenilai"></span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-xl-6">
                                             <div class="d-flex gap-3">
                                                 <div class="flex-fill">
-                                                    <h6 class="mb-1 fs-13">Tarif Onjek Retribusi (per meter<sup>2</sup>)</h6>
-                                                    <span class="d-block fs-13 text-muted fw-normal" id="d_tarifObjek"></span>
+                                                    <h6 class="mb-1 fs-13">Tarif Objek Retribusi (per meter<sup>2</sup>)
+                                                    </h6>
+                                                    <span class="d-block fs-13 text-muted fw-normal"
+                                                        id="d_tarifObjek"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6">
+                                            <div class="d-flex gap-3">
+                                                <div class="flex-fill">
+                                                    <h6 class="mb-1 fs-13">Harga Tanah
+                                                    </h6>
+                                                    <span class="d-block fs-13 text-muted fw-normal"
+                                                        id="d_hargaTanah"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6">
+                                            <div class="d-flex gap-3">
+                                                <div class="flex-fill">
+                                                    <h6 class="mb-1 fs-13">Harga Bangunan
+                                                    </h6>
+                                                    <span class="d-block fs-13 text-muted fw-normal"
+                                                        id="d_hargaBangunan"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -394,7 +444,8 @@
                                             <div class="d-flex gap-3">
                                                 <div class="flex-fill">
                                                     <h6 class="mb-1 fs-13">Keterangan</h6>
-                                                    <span class="d-block fs-13 text-muted fw-normal" id="d_keterangan"></span>
+                                                    <span class="d-block fs-13 text-muted fw-normal"
+                                                        id="d_keterangan"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -402,9 +453,9 @@
                                             <div class="d-flex gap-3">
                                                 <div class="flex-fill">
                                                     <h6 class="mb-1 fs-13">Dokumen Penilaian Tarif Objek Retribusi</h6>
-                                                    <a href="" download="" class="btn btn-primary label-btn" id="d_fileDokumen">
-                                                        <i class="ri-download-2-line label-btn-icon me-3"></i><span id="d_fileName"></span>
-                                                    </a>
+                                                    <div id="filePenilaian" class="filePenilaian">
+
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
